@@ -1,8 +1,11 @@
 import { motion } from 'framer-motion';
 import { Shield, Lock, Globe, Users, ChevronRight, Zap, Target, Activity } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useAccount } from 'wagmi';
 
 export const LandingPage = () => {
+    const { isConnected, address } = useAccount();
+
     return (
         <div className="landing-container" style={{ width: '100%', overflowX: 'hidden', backgroundColor: '#05070a' }}>
             {/* Nav */}
@@ -14,7 +17,9 @@ export const LandingPage = () => {
                 <div style={{ display: 'flex', gap: '2.5rem', alignItems: 'center' }}>
                     <a href="#features" style={{ color: '#94a3b8', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 500 }}>Features</a>
                     <a href="#tech" style={{ color: '#94a3b8', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 500 }}>Technology</a>
-                    <Link to="/dashboard" className="btn-primary" style={{ padding: '0.6rem 1.5rem', fontSize: '0.85rem' }}>Launch App</Link>
+                    <Link to="/dashboard" className="btn-primary" style={{ padding: '0.6rem 1.5rem', fontSize: '0.85rem' }}>
+                        {isConnected ? `Dashboard (${address?.slice(0, 6)})` : 'Launch App'}
+                    </Link>
                 </div>
             </nav>
 
@@ -32,7 +37,7 @@ export const LandingPage = () => {
                     </p>
                     <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center' }}>
                         <Link to="/dashboard" className="btn-primary" style={{ padding: '1rem 2.5rem', fontSize: '1rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                            Get Started <ChevronRight size={20} />
+                            {isConnected ? 'Go to Dashboard' : 'Get Started'} <ChevronRight size={20} />
                         </Link>
                         <button className="btn-secondary" style={{ padding: '1rem 2.5rem', fontSize: '1rem' }}>Read Documentation</button>
                     </div>
