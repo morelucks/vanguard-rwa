@@ -7,10 +7,10 @@ export const LandingPage = () => {
         <div className="landing-container" style={{ width: '100%', overflowX: 'hidden', backgroundColor: '#05070a' }}>
             {/* Nav */}
             <nav style={{ display: 'flex', justifyContent: 'space-between', padding: '1.5rem 4rem', alignItems: 'center', position: 'fixed', width: '100%', top: 0, zIndex: 1000, background: 'rgba(5,7,10,0.7)', backdropFilter: 'blur(10px)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none', color: '#fff' }}>
                     <Shield color="#6366f1" size={28} />
                     <span style={{ fontWeight: 700, fontSize: '1.25rem', letterSpacing: '1px' }}>VANGUARD</span>
-                </div>
+                </Link>
                 <div style={{ display: 'flex', gap: '2.5rem', alignItems: 'center' }}>
                     <a href="#features" style={{ color: '#94a3b8', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 500 }}>Features</a>
                     <a href="#tech" style={{ color: '#94a3b8', textDecoration: 'none', fontSize: '0.9rem', fontWeight: 500 }}>Technology</a>
@@ -105,12 +105,37 @@ export const LandingPage = () => {
                 </div>
             </section>
 
+            {/* Technology Section */}
+            <section id="tech" style={{ padding: '8rem 4rem', background: '#0a0d12' }}>
+                <div style={{ maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
+                    <h2 style={{ fontSize: '3rem', fontWeight: 700, marginBottom: '4rem' }}>Powered by the Chainlink Stack</h2>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.5rem' }}>
+                        <div style={{ padding: '2rem', background: 'rgba(255,255,255,0.02)', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                            <div style={{ color: '#6366f1', fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.5rem' }}>CRE Logic</div>
+                            <p style={{ color: '#64748b', fontSize: '0.85rem' }}>Workflow automation and execution environment.</p>
+                        </div>
+                        <div style={{ padding: '2rem', background: 'rgba(255,255,255,0.02)', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                            <div style={{ color: '#6366f1', fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.5rem' }}>TEE Secrets</div>
+                            <p style={{ color: '#64748b', fontSize: '0.85rem' }}>Confidential HTTP for safe institutional API orchestration.</p>
+                        </div>
+                        <div style={{ padding: '2rem', background: 'rgba(255,255,255,0.02)', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                            <div style={{ color: '#6366f1', fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.5rem' }}>World ID</div>
+                            <p style={{ color: '#64748b', fontSize: '0.85rem' }}>Proof of Humanness for secure institutional governance.</p>
+                        </div>
+                        <div style={{ padding: '2rem', background: 'rgba(255,255,255,0.02)', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                            <div style={{ color: '#6366f1', fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.5rem' }}>Tenderly</div>
+                            <p style={{ color: '#64748b', fontSize: '0.85rem' }}>Virtual Testnets for high-fidelity asset simulation.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             {/* Footer */}
             <footer style={{ padding: '6rem 4rem', textAlign: 'center', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-                <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', alignItems: 'center', marginBottom: '2rem' }}>
+                <Link to="/" style={{ display: 'flex', justifyContent: 'center', gap: '1rem', alignItems: 'center', marginBottom: '2rem', textDecoration: 'none', color: '#fff' }}>
                     <Shield color="#6366f1" size={24} />
                     <span style={{ fontWeight: 700, fontSize: '1.2rem' }}>VANGUARD</span>
-                </div>
+                </Link>
                 <p style={{ color: '#64748b', fontSize: '0.85rem' }}>© 2026 Vanguard Institutional. Built for the Chainlink Constellation Hackathon.</p>
             </footer>
         </div>
