@@ -10,9 +10,11 @@ import { Link } from 'react-router-dom';
 
 interface SidebarProps {
   walletAddress: string | null;
+  activeView: string;
+  setActiveView: (view: string) => void;
 }
 
-export const Sidebar = ({ walletAddress }: SidebarProps) => (
+export const Sidebar = ({ walletAddress, activeView, setActiveView }: SidebarProps) => (
     <nav className="sidebar">
     <Link to="/" className="logo-container" style={{ textDecoration: 'none' }}>
       <Shield color="#6366f1" size={32} />
@@ -20,26 +22,26 @@ export const Sidebar = ({ walletAddress }: SidebarProps) => (
     </Link>
     
     <div className="nav-links">
-      <Link to="/dashboard" className="nav-link active">
+      <div onClick={() => setActiveView('dashboard')} className={`nav-link ${activeView === 'dashboard' ? 'active' : ''}`} style={{ cursor: 'pointer' }}>
         <LayoutDashboard size={20} />
         Dashboard
-      </Link>
-      <Link to="/dashboard" className="nav-link">
+      </div>
+      <div onClick={() => setActiveView('assets')} className={`nav-link ${activeView === 'assets' ? 'active' : ''}`} style={{ cursor: 'pointer' }}>
         <TrendingUp size={20} />
         Assets
-      </Link>
-      <Link to="/dashboard" className="nav-link">
+      </div>
+      <div onClick={() => setActiveView('guardians')} className={`nav-link ${activeView === 'guardians' ? 'active' : ''}`} style={{ cursor: 'pointer' }}>
         <Server size={20} />
         Guardians
-      </Link>
-      <Link to="/dashboard" className="nav-link">
+      </div>
+      <div onClick={() => setActiveView('wallet')} className={`nav-link ${activeView === 'wallet' ? 'active' : ''}`} style={{ cursor: 'pointer' }}>
         <Wallet size={20} />
         Wallet
-      </Link>
-      <Link to="/dashboard" className="nav-link">
+      </div>
+      <div onClick={() => setActiveView('settings')} className={`nav-link ${activeView === 'settings' ? 'active' : ''}`} style={{ cursor: 'pointer' }}>
         <Settings size={20} />
         Settings
-      </Link>
+      </div>
     </div>
 
     <div style={{ marginTop: 'auto', padding: '1rem', background: 'rgba(255,255,255,0.02)', borderRadius: '15px', border: '1px solid rgba(255,255,255,0.05)' }}>
