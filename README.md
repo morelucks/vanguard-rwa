@@ -61,7 +61,7 @@ Vanguard includes a local testing environment to simulate institutional data fee
     npm run api
     ```
 
-2.  **Launch the Dashboard**:
+2.  **Launch the Frontend**:
     ```bash
     npm run dashboard
     ```
