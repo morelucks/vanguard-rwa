@@ -13,6 +13,28 @@ const App = () => {
   const { data, history, activities, isLive, forceStatus, setActivities } = useVanguardData();
   const [isHuman, setIsHuman] = useState(false);
   const [verifying, setVerifying] = useState(false);
+  const [walletAddress, setWalletAddress] = useState<string | null>(null);
+
+  const handleConnect = async () => {
+    if (typeof (window as any).ethereum !== 'undefined') {
+      try {
+        const accounts = await (window as any).ethereum.request({ method: 'eth_requestAccounts' });
+        setWalletAddress(accounts[0]);
+        setActivities(prev => [{
+            id: Date.now().toString(),
+            type: 'success',
+            title: 'Wallet Linked',
+            desc: `Session authorized for ${accounts[0].slice(0, 8)}`,
+            time: 'Now',
+            icon: ShieldCheck
+          }, ...prev]);
+      } catch (err) {
+        console.error("User rejected connection");
+      }
+    } else {
+      alert("Please install MetaMask to link your institutional wallet.");
+    }
+  };
 
   const handleVerify = () => {
     setVerifying(true);
@@ -39,10 +61,10 @@ const App = () => {
 
   return (
     <div style={{ display: 'flex', width: '100%' }}>
-      <Sidebar />
+      <Sidebar walletAddress={walletAddress} />
 
       <main className="main-content">
-        <Header isLive={isLive} />
+        <Header isLive={isLive} walletAddress={walletAddress} onConnect={handleConnect} />
 
         <GuardianControls onForce={forceStatus} />
 

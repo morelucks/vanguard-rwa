@@ -7,7 +7,11 @@ import {
   Server
 } from 'lucide-react';
 
-export const Sidebar = () => (
+interface SidebarProps {
+  walletAddress: string | null;
+}
+
+export const Sidebar = ({ walletAddress }: SidebarProps) => (
     <nav className="sidebar">
     <div className="logo-container">
       <Shield color="#6366f1" size={32} />
@@ -38,8 +42,8 @@ export const Sidebar = () => (
     </div>
 
     <div style={{ marginTop: 'auto', padding: '1rem', background: 'rgba(255,255,255,0.02)', borderRadius: '15px', border: '1px solid rgba(255,255,255,0.05)' }}>
-      <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Operator</p>
-      <p style={{ fontSize: '0.9rem', fontWeight: 600 }}>0x82...f9e1</p>
+      <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Operator Session</p>
+      <p style={{ fontSize: '0.9rem', fontWeight: 600 }}>{walletAddress ? `${walletAddress.slice(0, 10)}...` : '0xDisconnected'}</p>
     </div>
   </nav>
 );
