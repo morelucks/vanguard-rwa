@@ -1,0 +1,15 @@
+{
+  "name": "vanguard-rwa-root",
+  "version": "1.0.0",
+  "description": "Privacy-Preserving RWA Portfolio Guardian",
+  "scripts": {
+    "api": "node mock_api.js",
+    "deploy:sepolia": "cd contracts && npm install && npx tsx 1_deploy.ts",
+    "simulate": "cd asset-log-trigger-workflow && cre workflow simulate . --target local-simulation",
+    "setup": "bun install && cd contracts && npm install"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "tsx": "^4.21.0"
+  }
+}

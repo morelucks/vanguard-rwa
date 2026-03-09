@@ -1,0 +1,12 @@
+{
+  "schedule": "*/30 * * * * *",
+  "institutionalApiUrl": "http://localhost:8080",
+  "riskThreshold": 0.15,
+  "evms": [
+    {
+      "assetAddress": "0x1234567890abcdef1234567890abcdef12345678",
+      "chainSelectorName": "ethereum-testnet-sepolia",
+      "gasLimit": "2000000"
+    }
+  ]
+}
