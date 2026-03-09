@@ -1,28 +1,38 @@
-# 🛡️ Vanguard: Privacy-Preserving RWA Portfolio Guardian
+# Vanguard: Privacy-Preserving RWA Portfolio Guardian
 
-Vanguard is an **autonomous, privacy-preserving portfolio manager** built for institutions and private funds managing Real-World Assets (RWAs). It sits as an orchestration layer within the **Chainlink Runtime Environment (CRE)**, enabling sophisticated investment strategies that remain fully private and resistant to front-running.
+Vanguard is a professional, autonomous, and privacy-preserving portfolio management system designed for institutional investors and private funds managing Real-World Assets (RWAs). Built on top of the Chainlink Runtime Environment (CRE), it provides an orchestration layer that enables the execution of sophisticated investment strategies while maintaining full logic and signal privacy.
 
-## 🌟 Project Vision
+## Overview
 
-For institutional DeFi to scale, privacy is non-negotiable. Vanguard solves the "Transparency vs. Competitive Advantage" trade-off by running proprietary AI/Logic off-chain in a verifiable environment.
+In traditional finance, proprietary trading strategies and risk management protocols are sensitive intellectual property. Vanguard allows these strategies to be moved on-chain without exposing them to public ledgers or front-running bots, by leveraging Confidential Compute and the Chainlink Runtime Environment.
 
-## 🚀 Key Features
+## Project Vision
 
-*   **Confidential Strategy Execution**: Proprietary trading signals and logic execute within the CRE, ensuring that your unique alpha is never exposed on a public ledger.
-*   **Human-in-the-Loop Governance**: Integrates **World ID** for secure, privacy-preserving institutional governance. Critical fund rebalances can require off-chain humanness verification within the CRE before executive execution.
-*   **Secure Institutional Feeds**: Uses **Confidential HTTP** to fetch data from private NAV feeds and institutional APIs (e.g., Bloomberg) without exposing credentials or sensitive response data.
-*   **Autonomous Risk Management**: Real-time monitoring of collateral ratios and market volatility. Upon detecting a "black swan" event, the Vanguard Guardian automatically rebalances funds into a "Flight to Quality" asset.
-*   **Verifiable Settlement**: While the logic is private, the final settlement is executed on-chain and verified via the CRE's consensus mechanism.
+Institutional adoption of decentralized finance requires robust privacy controls. Vanguard addresses the inherent trade-off between blockchain transparency and competitive advantage by executing proprietary logic in a verifiable, off-chain environment.
 
-## 🛠️ Tech Stack
+## Core Capabilities
 
-- **Workflow Orchestration**: Chainlink Runtime Environment (CRE)
-- **Language**: TypeScript (CRE SDK)
-- **Security**: Confidential Compute & Confidential HTTP
-- **Simulations**: Tenderly Virtual Testnets
-- **Blockchain**: Ethereum / Arbitrum (Mock RWA ERC1155)
+*   **Confidential Strategy Execution**: Proprietary trading signals and rebalancing logic execute within the CRE, ensuring that investment alpha is protected from public exposure.
+*   **Human-in-the-Loop Governance**: Integration with World ID enables secure, privacy-preserving governance. Critical rebalances can be configured to require verifiable humanness confirmation within the CRE before final execution.
+*   **Secure Institutional Feeds**: Leveraging Confidential HTTP, Vanguard securely fetches market data from private institutional APIs (such as Bloomberg or Refinitiv) without exposing API credentials or sensitive response data on the blockchain.
+*   **Autonomous Risk Management**: Real-time monitoring of collateral ratios and market volatility. The Vanguard Guardian automatically triggers risk mitigation strategies—such as moving to high-quality liquid assets—upon detecting specified risk thresholds or "black swan" events.
+*   **Verifiable On-Chain Settlement**: While the execution logic remains private, final investment decisions are settled on-chain and verified via the CRE consensus mechanism.
 
-## 📊 High-Level Architecture
+## Tech Stack
+
+*   **Orchestration**: Chainlink Runtime Environment (CRE)
+*   **Language**: TypeScript (CRE SDK)
+*   **Identity & Governance**: World ID
+*   **Security**: Confidential Compute & Confidential HTTP
+*   **Smart Contracts**: Solidity (ERC1155 Portfolio Monitoring)
+*   **Frontend**: React (Institutional Portfolio Dashboard)
+*   **Testing**: Tenderly Virtual Testnets & Bun Runtime
+
+## Institutional Dashboard
+
+Vanguard includes a high-performance React-based monitoring suite that provides fund managers with a real-time view of portfolio health, market risk scores, and Guardian activity logs. The dashboard includes a simulation control center to test the system's response to various market conditions.
+
+## High-Level Architecture
 
 ```mermaid
 graph TD
@@ -34,40 +44,47 @@ graph TD
     F[Risk Monitoring] -- Trigger --> B
 ```
 
-## 🏗️ Getting Started
+## Getting Started
 
 ### Prerequisites
 
-- [CRE CLI](https://docs.chain.link/cre/getting-started/installing-the-cre-cli-macos-linux)
-- [Bun Runtime](https://bun.sh/)
-- Node.js & NPM
+*   CRE CLI
+*   Bun Runtime
+*   Node.js & NPM
 
-### Functional Simulation (Local Testing)
+### Functional Simulation
 
-To see the Vanguard Guardian in action without deploying to a live blockchain, you can use the built-in mock API:
+Vanguard includes a local testing environment to simulate institutional data feeds and Guardian responses.
 
-1.  **Start the Mock Institutional API**:
+1.  **Initialize the Mock API**:
     ```bash
-    node mock_api.js
-    ```
-2.  **Run the CRE Workflow Simulation**:
-    ```bash
-    cd asset-log-trigger-workflow
-    cre workflow simulate
+    npm run api
     ```
 
-The Guardian will fetch data from the local server. If you want to force a "Black Swan" event to see the rebalancing transaction:
-```bash
-curl "http://localhost:8080/?status=black_swan"
-```
+2.  **Launch the Dashboard**:
+    ```bash
+    npm run dashboard
+    ```
 
-## 🗺️ Roadmap
+3.  **Run the CRE Simulation**:
+    ```bash
+    npm run simulate
+    ```
 
-- [x] **Phase 1: Foundation** - Base CRE project setup and RWA contracts.
-- [ ] **Phase 2: Logic Integration** - Full implementation of AI-driven risk triggers.
-- [ ] **Phase 3: Privacy Layer** - Integration of Confidential Compute for secret management.
-- [ ] **Phase 4: Dashboard** - A real-time institutional monitor for rebalancing events.
+4.  **Simulate a Market Event**:
+    Use the simulation controls on the dashboard or use the provided script to trigger market volatility:
+    ```bash
+    ./test-trigger.sh
+    ```
+
+## Roadmap
+
+*   **Phase 1: Foundation (Current)**: Initialized CRE architecture, RWA smart contracts, and the Vanguard Guardian logic.
+*   **Phase 2: Institutional Suite (Current)**: Developed the real-time monitoring dashboard and the mock institutional data layer.
+*   **Phase 3: Governance (Current)**: Integrated World ID for human-in-the-loop verification on critical rebalance events.
+*   **Phase 4: Privacy & CCIP (Future)**: Implementing full Confidential Compute handlers and multi-chain rebalancing via Chainlink CCIP.
 
 ---
 
-Built for the **Chainlink Constellation Hackathon**.
+Vanguard: Empowering Institutions with Verifiable, Private, and Autonomous RWA Management.
+Built for the Chainlink Constellation Hackathon.
