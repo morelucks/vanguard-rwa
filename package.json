@@ -6,7 +6,8 @@
     "api": "node mock_api.js",
     "deploy:sepolia": "cd contracts && npm install && npx tsx 1_deploy.ts",
     "simulate": "cd asset-log-trigger-workflow && cre workflow simulate . --target local-simulation",
-    "setup": "bun install && cd contracts && npm install"
+    "dashboard": "cd dashboard && npm run dev",
+    "setup": "bun install && cd contracts && npm install && cd ../dashboard && npm install"
   },
   "dependencies": {},
   "devDependencies": {

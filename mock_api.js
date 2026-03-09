@@ -3,6 +3,7 @@ const http = require('http');
 const PORT = 8080;
 
 const server = http.createServer((req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Content-Type', 'application/json');
 
   // Logic: Cycle between 'stable', 'volatile', and 'black_swan' every minute
