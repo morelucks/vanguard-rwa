@@ -11,6 +11,12 @@ import { ShieldCheck } from 'lucide-react';
 import { useAccount } from 'wagmi';
 import { useAppKit } from '@reown/appkit/react';
 
+// Import New Views
+import { AssetsView } from '../views/AssetsView';
+import { GuardiansView } from '../views/GuardiansView';
+import { WalletView } from '../views/WalletView';
+import { SettingsView } from '../views/SettingsView';
+
 const Dashboard = () => {
   const { data, history, activities, isLive, forceStatus, setActivities } = useVanguardData();
   const [isHuman, setIsHuman] = useState(false);
@@ -64,49 +70,49 @@ const Dashboard = () => {
     return '#ef4444';
   };
 
+  const renderContent = () => {
+    switch (activeView) {
+        case 'dashboard':
+            return (
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                    <GuardianControls onForce={forceStatus} />
+                    <StatGrid 
+                    data={data} 
+                    isHuman={isHuman} 
+                    verifying={verifying} 
+                    onVerify={handleVerify} 
+                    getStatusColor={getStatusColor} 
+                    />
+                    <motion.div 
+                        initial={{ opacity: 0, scale: 0.98 }} 
+                        animate={{ opacity: 1, scale: 1 }} 
+                        transition={{ duration: 0.5 }}
+                    >
+                        <MainChart history={history} getStatusColor={getStatusColor} />
+                    </motion.div>
+                    <ActivityFeed activities={activities} />
+                </motion.div>
+            );
+        case 'assets':
+            return <AssetsView />;
+        case 'guardians':
+            return <GuardiansView />;
+        case 'wallet':
+            return <WalletView />;
+        case 'settings':
+            return <SettingsView />;
+        default:
+            return null;
+    }
+  }
+
   return (
     <div style={{ display: 'flex', width: '100%' }}>
       <Sidebar walletAddress={address || null} activeView={activeView} setActiveView={setActiveView} />
 
       <main className="main-content">
         <Header isLive={isLive} walletAddress={address || null} onConnect={handleConnect} />
-
-        {activeView === 'dashboard' ? (
-          <>
-            <GuardianControls onForce={forceStatus} />
-
-            <StatGrid 
-              data={data} 
-              isHuman={isHuman} 
-              verifying={verifying} 
-              onVerify={handleVerify} 
-              getStatusColor={getStatusColor} 
-            />
-
-            <motion.div 
-                initial={{ opacity: 0, scale: 0.98 }} 
-                animate={{ opacity: 1, scale: 1 }} 
-                transition={{ duration: 0.5 }}
-            >
-                <MainChart history={history} getStatusColor={getStatusColor} />
-            </motion.div>
-
-            <ActivityFeed activities={activities} />
-          </>
-        ) : (
-          <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="card-panel" 
-            style={{ textAlign: 'center', padding: '6rem 2rem', borderStyle: 'dashed' }}
-          >
-            <div style={{ padding: '2rem', background: 'rgba(255,255,255,0.02)', borderRadius: '25px', display: 'inline-block', marginBottom: '1.5rem' }}>
-              <ShieldCheck size={48} color="var(--accent-blue)" style={{ opacity: 0.4 }} />
-            </div>
-            <h2 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>{activeView.charAt(0).toUpperCase() + activeView.slice(1)} Module</h2>
-            <p style={{ color: 'var(--text-secondary)' }}>This institutional feature is currently under final CRE maintenance.</p>
-          </motion.div>
-        )}
+        {renderContent()}
       </main>
     </div>
   );
