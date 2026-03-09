@@ -103,10 +103,14 @@ const onLogTrigger = (runtime: Runtime<Config>, log: EVMLog): string => {
     const evmClient = new cre.capabilities.EVMClient(network.chainSelector.selector)
 
     // Encode rebalance: Update the Asset Metadata UID with a signed 'EMERGENCY_EXIT' status
+    // Now including the 'humanVerified' status for the World ID track
     const reportData = encodeAbiParameters(
-      parseAbiParameters("uint256 assetId, string memory status"),
-      [BigInt(1), `RISK_LVL_${marketData.marketStatus.toUpperCase()}_PRICE_${marketData.price}`]
+      parseAbiParameters("uint256 assetId, string memory status, bool humanVerified"),
+      [BigInt(1), `RISK_LVL_${marketData.marketStatus.toUpperCase()}_PRICE_${marketData.price}`, true] 
     )
+    
+    // Note: In a production DON, the 'true' above would be the result of 
+    // verifying a ZK Proof from World ID Kit off-chain within the CRE TEE/WASM.
 
     const reportResponse = runtime.report({
       encodedPayload: hexToBase64(reportData),

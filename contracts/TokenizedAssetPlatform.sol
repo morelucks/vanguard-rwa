@@ -29,6 +29,7 @@ contract TokenizedAssetPlatform is ERC1155, AccessControl, ERC1155Burnable, Rece
 
     bytes32 public constant ISSUER_ROLE = keccak256("ISSUER_ROLE");
     bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
+    bytes32 public constant GOVERNANCE_ROLE = keccak256("GOVERNANCE_ROLE");
 
     struct Asset {
         string name;          // Asset name(eg. Invoice-01, T-Bill-01, Loan-01, Carbon-Credit-01, etc.)
@@ -38,6 +39,7 @@ contract TokenizedAssetPlatform is ERC1155, AccessControl, ERC1155Burnable, Rece
         uint256 totalSupply;  // Asset total supply
         bool active;          // Mark if asset is verified or not by issuer
         string uid;           // uid in db, uid is only updated from updateMetadata called by CRE (optional)
+        bool humanVerified;   // New: Tracks if the last critical action was human-verified via World ID
     }
 
     struct UpdateMetadataCallData {
@@ -88,6 +90,7 @@ contract TokenizedAssetPlatform is ERC1155, AccessControl, ERC1155Burnable, Rece
     event AssetPaused(uint256 indexed assetId, address indexed issuer);
     event AssetUnpaused(uint256 indexed assetId, address indexed issuer);
     event AssetUidUpdated(uint256 indexed assetId, string newUri);
+    event GovernanceOverrideExecuted(uint256 indexed assetId, address indexed governor, string action);
 
     /**
      * @dev constructor, platform admin is set.
@@ -95,21 +98,32 @@ contract TokenizedAssetPlatform is ERC1155, AccessControl, ERC1155Burnable, Rece
     constructor(address forwardAddr) ERC1155("") ReceiverTemplate(forwardAddr){
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(ADMIN_ROLE, msg.sender);
+        _grantRole(GOVERNANCE_ROLE, msg.sender);
     }
 
     /**
    * @notice This internal function contains the core business logic.
    */
   function _processReport(bytes calldata report) internal override {
-    // Decode the report bytes into assetId and UID
-    (uint64 assetId, string memory _uid) = abi.decode(
+    // Decode the report bytes into assetId, UID, and humanVerified flag
+    (uint64 assetId, string memory _uid, bool _humanVerified) = abi.decode(
             report,
-            (uint64, string)
+            (uint64, string, bool)
         );
 
     require(assetId != 0, "invalid asset Id");
     
+    assets[assetId].humanVerified = _humanVerified;
     updateSystemOfRecordMetadata(assetId, _uid);
+  }
+
+  /**
+   * @dev Manual governance override for rebalancing. Must have GOVERNANCE_ROLE.
+   */
+  function executeGovernanceRebalance(uint256 assetId, string memory reason) public onlyRole(GOVERNANCE_ROLE) {
+      assets[assetId].humanVerified = true;
+      emit GovernanceOverrideExecuted(assetId, msg.sender, reason);
+      updateSystemOfRecordMetadata(assetId, string(abi.encodePacked("GOV_OVERRIDE_", reason)));
   }
 
     /**
@@ -139,7 +153,8 @@ contract TokenizedAssetPlatform is ERC1155, AccessControl, ERC1155Burnable, Rece
             issuer: issuer,
             totalSupply: initialSupply,
             active: false,
-            uid: assetUid
+            uid: assetUid,
+            humanVerified: false
         });
         
         assetIssuers[assetId] = issuer;

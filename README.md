@@ -9,6 +9,7 @@ For institutional DeFi to scale, privacy is non-negotiable. Vanguard solves the 
 ## 🚀 Key Features
 
 *   **Confidential Strategy Execution**: Proprietary trading signals and logic execute within the CRE, ensuring that your unique alpha is never exposed on a public ledger.
+*   **Human-in-the-Loop Governance**: Integrates **World ID** for secure, privacy-preserving institutional governance. Critical fund rebalances can require off-chain humanness verification within the CRE before executive execution.
 *   **Secure Institutional Feeds**: Uses **Confidential HTTP** to fetch data from private NAV feeds and institutional APIs (e.g., Bloomberg) without exposing credentials or sensitive response data.
 *   **Autonomous Risk Management**: Real-time monitoring of collateral ratios and market volatility. Upon detecting a "black swan" event, the Vanguard Guardian automatically rebalances funds into a "Flight to Quality" asset.
 *   **Verifiable Settlement**: While the logic is private, the final settlement is executed on-chain and verified via the CRE's consensus mechanism.

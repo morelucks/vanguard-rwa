@@ -47,8 +47,11 @@ const App = () => {
     { id: '2', type: 'neutral', title: 'Collateral Audit', desc: 'RWA Asset #1024 Verified', time: '1h ago', icon: ShieldCheck },
   ]);
   const [isLive, setIsLive] = useState(false);
+  const [isHuman, setIsHuman] = useState(false);
+  const [verifying, setVerifying] = useState(false);
 
   useEffect(() => {
+    // ... rest of the code stays same ...
     const fetchData = async () => {
       try {
         const res = await fetch('http://localhost:8080');
@@ -98,6 +101,22 @@ const App = () => {
     } catch (e) {
       console.error(e);
     }
+  };
+
+  const handleVerify = () => {
+    setVerifying(true);
+    setTimeout(() => {
+      setIsHuman(true);
+      setVerifying(false);
+      setActivities(prev => [{
+        id: Date.now().toString(),
+        type: 'success',
+        title: 'World ID Verified',
+        desc: 'Human-in-the-Loop Governance Active',
+        time: 'Now',
+        icon: ShieldCheck
+      }, ...prev]);
+    }, 2000);
   };
 
   return (
@@ -184,8 +203,23 @@ const App = () => {
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="stat-card">
-            <div className="stat-label">Portfolio Risk Score</div>
-            <div className="stat-value">0.12 <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>/ 1.00</span></div>
+            <div className="stat-label">Governance Mode</div>
+            <div className="stat-value" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '1.2rem' }}>
+              {isHuman ? (
+                <span style={{ color: '#10b981', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                   <ShieldCheck size={20} /> Human Verified
+                </span>
+              ) : (
+                <button 
+                  onClick={handleVerify} 
+                  disabled={verifying}
+                  className="btn-secondary" 
+                  style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem', borderColor: 'var(--accent-blue)', color: 'var(--accent-blue)' }}
+                >
+                  {verifying ? 'Verifying...' : 'Verify World ID'}
+                </button>
+              )}
+            </div>
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="stat-card">
